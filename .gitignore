@@ -1,0 +1,41 @@
+*.db
+.DS_Store
+.cache/
+.file_versions
+.gitkeep
+.log
+.logs/
+.mage_temp_profiles
+.preferences.yaml
+.ssh_tunnel
+.terraform
+.terraform.*
+.variables/
+__pycache__/
+docker-compose.override.yml
+logs/
+
+mlruns/
+secrets/
+terraform.tfstate
+terraform.tfstate.backup
+
+# Data
+/data/
+mage_data/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
