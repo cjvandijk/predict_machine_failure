@@ -13,7 +13,6 @@ boto3
 fastparquet
 graphviz
 hyperopt
-pyarrow
 mlflow==2.12.1
 pandas
 numpy
