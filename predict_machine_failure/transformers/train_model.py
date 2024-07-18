@@ -1,16 +1,11 @@
 import mlflow
-# import sys
-# print(sys.path)
-
-print("MLFLOW TYPE", type(mlflow))
-print("MLFLOW FILE", mlflow.__file__)
-print("MLflow imported:", dir(mlflow))
-
-# from mlflow.tracking import MlflowClient
-
 from pandas import DataFrame
+from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
+
+from predict_machine_failure.utils import split_dataset
+from predict_machine_failure.utils import encode
 
 
 if 'transformer' not in globals():
@@ -32,25 +27,15 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
         lr: the linear regression model
     """
 
-    # client = MlflowClient()
-    # client.set_tracking_uri(uri="http://mlflow:5000")
-    # client.set_experiment("train_model_thru_mage")
-    # client.sklearn.autolog()
-
-    # with client.start_run():
-
-    # mlflow.set_tracking_uri(uri="http://mlflow:5000")
+    mlflow.set_tracking_uri(uri="http://mlflow:5000")
     mlflow.set_experiment("train_model_thru_mage")
     mlflow.sklearn.autolog()
 
-    with mlflow.start_run():
-        y_train = df['fail'].values
-        df_train = df[~df['fail']]
-        
-        train_dicts = df_train.to_dict(orient='records')
+    # X_train, X_test, y_train, y_test 
 
-        dv = DictVectorizer()
-        X_train = dv.fit_transform(train_dicts)
+    with mlflow.start_run():
+        df_train, df_val, y_train, y_val = split_dataset.split_df(df)
+        X_train, X_val, dv = encode.vectorize_features(df_train, df_val)
 
         lr = LinearRegression()
     
