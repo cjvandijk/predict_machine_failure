@@ -10,6 +10,7 @@ notebook
 matplotlib
 seaborn
 boto3
+flask
 fastparquet
 graphviz
 hyperopt
