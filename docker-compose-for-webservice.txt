@@ -1,0 +1,23 @@
+  mlflow:
+    build: 
+      context: .
+      dockerfile: mlflow.dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - "${PWD}/mlflow_data:/home/mlflow_data/"
+      - "${PWD}/mlartifacts:/mlartifacts/"
+    networks:
+      - app-network
+  
+  
+  # prediction-webservice:
+  #   build: 
+  #     context: .
+  #     dockerfile: predictservice.dockerfile
+  #   ports:
+  #     - "9696:9696"
+  #   volumes:
+  #     - "${PWD}/model:/home/model/"
+  #   networks:
+  #     - app-network

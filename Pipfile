@@ -4,8 +4,33 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+black = "*"
+flake8 = "*"
+isort = "*"
+tqdm = "*"
+typer = "*"
+ipython = "*"
+jupyter = "*"
+jupyterlab = "*"
+notebook = "*"
+matplotlib = "*"
+seaborn = "*"
+boto3 = "*"
+fastparquet = "*"
+hyperopt = "*"
+mlflow = "==2.12.1"
+pandas = "*"
+numpy = "*"
+scikit-learn = "*"
+shap = "*"
+xgboost = "*"
+graphviz = "*"
+pyarrow = "*"
+flask = "*"
+loguru = "*"
+mkdocs = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.12"
+python_version = "3.10"

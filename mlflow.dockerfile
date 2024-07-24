@@ -10,3 +10,7 @@ CMD [\
     "--host", "0.0.0.0", \
     "--port", "5000" \
 ]
+
+# mlflow server --backend-store-uri sqlite:///home/mlflow_data/mlflow.db --default-artifact-root s3://claudia-mlops --host 0.0.0.0 --port 5000
+# "--default-artifact-root", "s3://claudia-mlops" \
+    

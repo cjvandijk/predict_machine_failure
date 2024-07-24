@@ -1,5 +1,6 @@
 import mlflow
 from pandas import DataFrame
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
@@ -27,7 +28,7 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
         lr: the linear regression model
     """
 
-    mlflow.set_tracking_uri(uri="http://mlflow:5000")
+    mlflow.set_tracking_uri(uri="http://mlflow_data:5000")
     mlflow.set_experiment("train_model_thru_mage")
     mlflow.sklearn.autolog()
 
@@ -41,7 +42,12 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
     
         lr.fit(X_train, y_train)
 
-    print(lr.intercept_)
+        mlflow.log_artifact(
+            local_path="models/lin_reg.bin",
+            artifact_path="models_pickle"
+        )
+        with open("../model/lin_reg.bin", "wb") as f_out:
+            pickle.dump((dv. lr), f_out)
 
     return dv, lr
 
