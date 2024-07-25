@@ -1,3 +1,5 @@
+import os
+from pathlib import Path
 import mlflow
 from pandas import DataFrame
 import pickle
@@ -28,7 +30,7 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
         lr: the linear regression model
     """
 
-    mlflow.set_tracking_uri(uri="http://mlflow_data:5000")
+    mlflow.set_tracking_uri(uri="http://mlflow:5000")
     mlflow.set_experiment("train_model_thru_mage")
     mlflow.sklearn.autolog()
 
@@ -42,12 +44,14 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
     
         lr.fit(X_train, y_train)
 
-        mlflow.log_artifact(
-            local_path="models/lin_reg.bin",
-            artifact_path="models_pickle"
-        )
-        with open("../model/lin_reg.bin", "wb") as f_out:
-            pickle.dump((dv. lr), f_out)
+        model_path = Path(os.getenv("MODELS_LOC", "../models")) / "lin_reg.bin"
+
+        try:
+            with open(model_path, "wb") as f_out:
+                pickle.dump((dv, lr), f_out)
+            print(f"Successfully wrote binary file")
+        except Exception as e:
+            print(f"Failed to write binary file: {e}")
 
     return dv, lr
 

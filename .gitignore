@@ -23,6 +23,7 @@ terraform.tfstate.backup
 # Data
 /data/
 mage_data/
+mage-ai.db
 
 # Jupyter Notebook
 .ipynb_checkpoints

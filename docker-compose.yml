@@ -10,23 +10,24 @@ services:
     environment:
       USER_CODE_PATH: /home/src/${PROJECT_NAME}
       ENV: dev
-      INPUT_DATA_FILE: data/raw/data.csv
       MLFLOW_TRACKING_URI: http://mlflow:5000
     ports:
       - 6789:6789
     volumes:
       - .:/home/src/
+      - ./models:/home/src/models
       # Store the data output on local machine to easily debug (optional).
       - ~/.mage_data:/$MAGE_CODE_PATH/mage_data
       # Initial credentials to create an IAM user with limited permissions for deployment.
       - ~/.aws:/root/.aws
       # Local machine’s SSH keys
       - ~/.ssh:/root/.ssh:ro
-      # Local machine’s GitHub configs
-      - ~/.gitconfig:/root/.gitconfig:ro
+      
     restart: on-failure:5
     networks:
-      - app-network
+      app-network:
+        aliases:
+          - mlflow
     depends_on:
       - magic-database
     stdin_open: true # for interactive debugging
@@ -42,6 +43,17 @@ services:
       # Custom database initialization scripts (optional).
       - ./scripts/database:/docker-entrypoint-initdb.d
     restart: always
+    networks:
+      - app-network
+  mlflow:
+    build: 
+      context: .
+      dockerfile: mlflow.dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - "${PWD}/mlflow_data:/home/mlflow_data/"
+      - "${PWD}/mlartifacts:/mlartifacts/"
     networks:
       - app-network
 networks:
