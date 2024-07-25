@@ -1,21 +1,19 @@
+import os
 import mlflow
 import pickle
 from mlflow.tracking import MlflowClient
 from flask import Flask, request, jsonify
 
-RUN_ID = "7c0cdf34f53042a4b24293fb27241767"   # os.getenv('RUN_ID')
-MLFLOW_TRACKING_URI = "http://127.0.0.1:5000"
-MODEL_LOC = "../model/lin_reg.bin"
+RUN_ID = os.getenv('RUN_ID', "65f1f6f4f4e34ebe94498dba20d37691")
+MLFLOW_TRACKING_URI = os.getenv('MLFLOW_TRACKING_URI', "http://127.0.0.1:5000")
+MODEL_LOC = os.getenv('MODELS_LOC', "../models/lin_reg.bin")
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
 # client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
 
 # path = client.download_artifacts(run_id=RUN_ID, path='dict_vectorizer.bin')
-logged_model = f"s3://claudia-mlops/1/{RUN_ID}/artifacts/model"
-
-model = mlflow.pyfunc.load_model(logged_model)
-
+model = mlflow.pyfunc.load_model(MODEL_LOC)
 
 # logged_model = f"s3://claudia-mlops/1/{RUN_ID}/artifacts/model"
 
