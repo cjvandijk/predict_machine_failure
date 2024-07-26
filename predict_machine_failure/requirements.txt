@@ -11,6 +11,8 @@ matplotlib
 seaborn
 boto3
 flask
+gunicorn
+requests
 fastparquet
 graphviz
 hyperopt

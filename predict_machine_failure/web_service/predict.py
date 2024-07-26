@@ -1,19 +1,16 @@
 import os
-import mlflow
+# import mlflow
 import pickle
-from mlflow.tracking import MlflowClient
+# from mlflow.tracking import MlflowClient
 from flask import Flask, request, jsonify
 
-RUN_ID = os.getenv('RUN_ID', "65f1f6f4f4e34ebe94498dba20d37691")
-MLFLOW_TRACKING_URI = os.getenv('MLFLOW_TRACKING_URI', "http://127.0.0.1:5000")
-MODEL_LOC = os.getenv('MODELS_LOC', "../models/lin_reg.bin")
+MODEL_LOC = os.getenv('MODELS_LOC', "lin_reg.bin")
 
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+# RUN_ID = os.getenv('RUN_ID', "65f1f6f4f4e34ebe94498dba20d37691")
+# MLFLOW_TRACKING_URI = os.getenv('MLFLOW_TRACKING_URI', "http://127.0.0.1:5000")
 
-# client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)
-
-# path = client.download_artifacts(run_id=RUN_ID, path='dict_vectorizer.bin')
-model = mlflow.pyfunc.load_model(MODEL_LOC)
+# mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+# model = mlflow.pyfunc.load_model(MODEL_LOC)
 
 # logged_model = f"s3://claudia-mlops/1/{RUN_ID}/artifacts/model"
 
@@ -26,19 +23,18 @@ model = mlflow.pyfunc.load_model(MODEL_LOC)
 with open(MODEL_LOC, 'rb') as f_in:
     (dv, model) = pickle.load(f_in)
 
+app = Flask('predict-machine-failure')
+
 
 def predict(features):
     X = dv.transform(features)
     preds = model.predict(X)
-    return preds[0]
-
-
-app = Flask('predict-machine-failure')
+    return round(preds[0], 2)
 
 
 @app.route('/predict', methods=['POST'])
 def predict_endpoint():
-    print("GETTING MACHINE_READINGS")
+    print("PROCESSING MACHINE_READINGS")
     machine_readings = request.get_json()
 
     pred = predict(machine_readings)
