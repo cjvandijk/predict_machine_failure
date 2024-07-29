@@ -57,23 +57,22 @@ services:
       - "${PWD}/models:/models/"
     networks:
       - app-network
-  prediction-webservice:
-    build:
-      context: .
-      dockerfile: predictservice.dockerfile
-    # environment:
-    #   MLFLOW_TRACKING_URI: http://mlflow:5000
-    #   MODELS_LOC: ${PWD}/models/lin_reg.bin
-    # volumes:
-    #   - .:/home/src/
-      # IAM user credentials
-      # - ~/.aws:/root/.aws
-      # Local machine’s SSH keys
-      # - ~/.ssh:/root/.ssh:ro
-    ports:
-      - "9696:9696"
-    networks:
-      - app-network
+  # prediction-webservice:
+  #   build:
+  #     context: .
+  #     dockerfile: predictservice.dockerfile
+  #   environment:
+  #     MLFLOW_TRACKING_URI: http://mlflow:5000
+  #   volumes:
+  #     - .:/home/src/
+  #     # IAM user credentials
+  #     - ~/.aws:/root/.aws
+  #     # Local machine’s SSH keys
+  #     - ~/.ssh:/root/.ssh:ro
+  #   ports:
+  #     - "9696:9696"
+  #   networks:
+  #     - app-network
 networks:
   app-network:
     driver: bridge

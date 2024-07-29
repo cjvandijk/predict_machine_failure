@@ -1,4 +1,5 @@
 import requests
+import json
 
 machine_readings = {
     "footfall": 83,
@@ -13,6 +14,7 @@ machine_readings = {
 }
 
 url = 'http://localhost:9696/predict'
-
-response = requests.post(url, json=machine_readings)
-print(response.json())
+req_string = json.dumps(machine_readings)
+print(type(req_string), len(req_string), json.loads(req_string))
+response = requests.post(url, json=json.dumps(machine_readings))
+print("RESPONSE = ", response.json())

@@ -10,15 +10,13 @@ RUN pip3 install -r ${USER_CODE_PATH}/requirements.txt
 
 ENV PYTHONPATH="${PYTHONPATH}:${MAGE_CODE_PATH}/${PROJECT_NAME}:/usr/local/lib/python3.10/site-packages"
 
-# WORKDIR ${MAGE_CODE_PATH}
+WORKDIR ${MAGE_CODE_PATH}
 
-# COPY ${PROJECT_NAME} ${PROJECT_NAME} 
+COPY ${PROJECT_NAME} ${PROJECT_NAME} 
 
-WORKDIR /app
+# WORKDIR /app
 
-COPY [ "${PROJECT_NAME}/web_service/predict.py", "/models/lin_reg.bin", "./" ]
-
-ENV MODELS_LOC="lin_reg.bin"
+# COPY [ "predict_machine_failure/web_service/predict.py", "models/lin_reg.bin", "./" ]
 
 EXPOSE 9696
 
