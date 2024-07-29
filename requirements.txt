@@ -17,7 +17,7 @@ pyarrow
 mlflow==2.12.1
 pandas
 numpy
-scikit-learn
+scikit-learn===1.5.0
 shap
 xgboost
 loguru
