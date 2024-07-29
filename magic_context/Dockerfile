@@ -1,0 +1,15 @@
+FROM mageai/mageai:latest
+
+ARG PROJECT_NAME=predict_machine_failure
+ARG MAGE_CODE_PATH=/home/src
+ARG USER_CODE_PATH=${MAGE_CODE_PATH}/${PROJECT_NAME}
+
+COPY requirements.txt requirements.txt 
+
+RUN pip3 install -r requirements.txt
+
+ENV PYTHONPATH="${PYTHONPATH}:${MAGE_CODE_PATH}/${PROJECT_NAME}:/usr/local/lib/python3.10/site-packages"
+
+WORKDIR ${PROJECT_NAME}/{PROJECT_NAME}
+
+COPY ${PROJECT_NAME} ./
