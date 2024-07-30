@@ -1,0 +1,8 @@
+boto3
+pandas
+numpy
+flask
+scikit-learn===1.5.0
+localstack
+gunicorn
+requests

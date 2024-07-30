@@ -1,5 +1,3 @@
-from typing import Tuple
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
@@ -8,9 +6,7 @@ Function for splitting dataset into test and train sets
 """
 
 
-def split_df(
-    df: pd.DataFrame,
-) -> Tuple(pd.DataFrame, list[int], pd.DataFrame, list[int]):
+def split_df(df: pd.DataFrame):
     """
     Splits dataframe into train and test dataframes and target values
     """

@@ -1,11 +1,12 @@
 services:
   magic:
     image: mageai/mageai:latest
-    command: mage start ${PROJECT_NAME}
+    working_dir: /home/src/magic_context
+    command: mage start --project-uuid 6164c8a97a5e48aea8c28ea5ef078b4a ${PROJECT_NAME} 
     env_file:
       - .env
     build:
-      context: .
+      context: ./magic_context
       dockerfile: Dockerfile
     environment:
       USER_CODE_PATH: $MAGE_CODE_PATH/${PROJECT_NAME}
@@ -47,29 +48,19 @@ services:
       - app-network
   mlflow:
     build: 
-      context: .
+      context: ./mlflow_context
       dockerfile: mlflow.dockerfile
     ports:
       - "5000:5000"
     volumes:
       - "${PWD}/mlflow_data:/home/mlflow_data/"
-      - "${PWD}/mlartifacts:/mlartifacts/"
       - "${PWD}/models:/models/"
     networks:
       - app-network
   prediction-webservice:
     build:
       context: .
-      dockerfile: predictservice.dockerfile
-    # environment:
-    #   MLFLOW_TRACKING_URI: http://mlflow:5000
-    #   MODELS_LOC: ${PWD}/models/lin_reg.bin
-    # volumes:
-    #   - .:/home/src/
-      # IAM user credentials
-      # - ~/.aws:/root/.aws
-      # Local machine’s SSH keys
-      # - ~/.ssh:/root/.ssh:ro
+      dockerfile: predict_service_context/predictservice.dockerfile
     ports:
       - "9696:9696"
     networks:
