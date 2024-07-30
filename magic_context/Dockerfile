@@ -11,7 +11,5 @@ RUN pip3 install -r requirements.txt
 ENV PYTHONPATH="${PYTHONPATH}:${MAGE_CODE_PATH}/magic_context/${PROJECT_NAME}:/usr/local/lib/python3.10/site-packages"
 
 WORKDIR ${PROJECT_NAME}
-# WORKDIR ${PROJECT_NAME}/{PROJECT_NAME}
 
-# COPY ./${PROJECT_NAME} ./
 COPY ./ ./

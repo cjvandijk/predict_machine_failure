@@ -74,17 +74,24 @@ Python test files are included which can be used to check the model prediction u
 1. `docker-compose build && docker-compose up`
 1. If you are running this on the cloud, you will need to establish ssh connection your local machine and forward port 9696 to use the web service, and if you want to view the Mage and MLFlow UI, also forward ports 6789 and 5000. (this can be done via [Visual Studio Code](https://code.visualstudio.com/docs/remote/ssh))
 
-### Test the webservice
-
-1. Once the containers are running, open a new terminal and `cd` into the project folder.
-1. You may wish to install requirements.txt or pipenv file into your system.
-1. `python predict_machine_failure/web_service/test_fail.py` to see a prediction for a (very) likely failure.
-1. `python predict_machine_failure/web_service/test_no_fail.py` to see a prediction for an unlikely failure.
-
 ### View the Mage and MLFlow UI
 
-- The Mage UI will be available from your browser at http://localhost:6789
+- The Mage UI will be available from your browser at http://localhost:6789. 
+    - Navigate to that address.
+    - Select the pipelines button at the left.
+    - Select the predict_machine_failure pipeline.
+    - Select the edit pipeline button at the left.
+    - Run each block in order.
 
 - The MLFlow UI will be available at http://localhost:5000
+    - The Experiments tab (top) will show the model training experiments that have been run through the Mage pipeline.
+    - The Models tab will show the model versions that have been registered through the Mage pipeline.
 
-- Gunicorn will be serving the web service at port 9696, but there is no UI for it. It is intended to be used as part of a larger system that takes action based on the result. The result has been formatted for human view; it can be changed to its unformatted version for machine use.
+### Test the webservice
+
+Gunicorn will be serving the web service at port 9696, but there is no UI for it. It is intended to be used as part of a larger system that takes queries the prediction service and then takes some action based on the result. The result has been formatted for human view; it could be changed to its unformatted version for machine use.
+
+1. With the containers running, open a new terminal and `cd` into the `predict_machine_failure` project folder.
+1. `pipenv install` to install requirements.
+1. `pipenv run python tests/test_fail.py` to see a prediction for a (very) likely failure.
+1. `pipenv run python tests/test_no_fail.py` to see a prediction for an unlikely failure.

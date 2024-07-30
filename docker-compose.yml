@@ -23,7 +23,6 @@ services:
       - ~/.aws:/root/.aws
       # Local machine’s SSH keys
       - ~/.ssh:/root/.ssh:ro
-      
     restart: on-failure:5
     networks:
       app-network:
