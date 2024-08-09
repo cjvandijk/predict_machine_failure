@@ -38,6 +38,7 @@ The emphasis on this project is not on producing the best model possible. I focu
 - train a model in Mage AI, while
     - tracking model training experiments in Mage/MLFlow
     - registering the model in Mage/MLFlow
+- run a Mage AI trigger to automatically re-train the model when data changes
 - save the model as a pickle binary
 - deploy the model as a web service using Flask/gunicorn
 - monitor the model using Evidently (not yet implemented)
@@ -68,7 +69,7 @@ Python test files are included which can be used to check the model prediction u
 
 ### Spin up the containers
 
-1. Docker must be installed and the daemon running on the host or cloud machine.
+1. Docker must be installed, and the daemon must be running on the host or cloud machine.
 1. Fork or clone this repository into your local machine or into a cloud virtual machine, such as AWS EC2. It contains data, code, docker config needed.
 1. `cd` to the project folder you just created
 1. `docker-compose build && docker-compose up`
