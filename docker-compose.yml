@@ -64,6 +64,18 @@ services:
       - "9696:9696"
     networks:
       - app-network
+  localstack:
+    image: localstack/localstack:s3-latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - S3_ENDPOINT_URL=http://localstack:4566/
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 networks:
   app-network:
     driver: bridge

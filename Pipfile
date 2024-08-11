@@ -31,6 +31,7 @@ loguru = "*"
 mkdocs = "*"
 gunicorn = "*"
 requests = "*"
+localstack = "*"
 
 [dev-packages]
 

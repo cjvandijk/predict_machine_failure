@@ -29,11 +29,3 @@ def retrain(*args, **kwargs):
         schedule_name='Automatic retraining for sklearn models',
         verbose=True,
     )
-
-
-@test
-def test_output(output, *args) -> None:
-    """
-    Template code for testing the output of the block.
-    """
-    assert output is not None, 'The output is undefined'
