@@ -60,20 +60,25 @@ def predict_endpoint() -> Dict[str, str | int]:
 
     machine_readings = request.get_json()
 
-    for k in ["footfall","temp_mode","air_quality","proximity_sensor",
-    "current_usage","voc_level","revolutions_per_minute",
-    "input_pressure","temperature"]:
+    result = {
+        "error_message": None,
+        "failure_likelihood": None
+    }
+
+    required_keys = ["footfall", "temp_mode", "air_quality", "proximity_sensor",
+                     "current_usage", "voc_level", "revolutions_per_minute",
+                     "input_pressure", "temperature"]
+
+    for k in required_keys:
         if k not in machine_readings:
-            result = {
-                "error_message": "Incorrect data sent to predict service. Expecting {k}.",
-                "failure_likelihood": None
-                }
+            result["error_message"] = f"Incorrect data sent to predict service. Expecting {k}."
             return jsonify(result)
         
     model_load_msg, dv, model = load_model()
-    
-    if not model_load_msg:  # a message means the model failed to load
 
+    if model_load_msg:  # a message means the model failed to load
+        result["error_message"] = f"Model failed to load: {model_load_msg}"
+    else:
         print("PROCESSING MACHINE_READINGS")
         pred = predict(machine_readings, model, dv)
         result["failure_likelihood"] = f"{int(pred*100)} %"

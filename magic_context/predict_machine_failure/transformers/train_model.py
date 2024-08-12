@@ -37,7 +37,7 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
 
     mlflow.set_tracking_uri(uri="http://mlflow:5000")
     mlflow.set_experiment("train_model_thru_mage")
-    mlflow.sklearn.autolog()
+    mlflow.sklearn.autolog(log_datasets=False)
 
     with mlflow.start_run():
         df_train, df_val, y_train, y_val = split_dataset.split_df(df)

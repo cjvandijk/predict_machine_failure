@@ -40,7 +40,7 @@ The emphasis on this project is not on producing the best model possible. It foc
 - run hourly trigger in Mage to automatically re-train the model when data changes
 - save the model as a pickle binary
 - deploy the model as a web service using Flask/gunicorn
-- monitor the model using Evidently (not yet implemented)
+- monitor the pipeline through Mage
 - integration testing
     - s3 upload using localstack
     - the prediction webservice using Python's requests module
@@ -97,7 +97,7 @@ The hourly trigger for the Mage re-training pipeline only executes if data chang
 <details>
 <summary><b><i>Test the webservice</i></b></summary>
 
-Gunicorn will be serving the web service at port 9696, but there is no UI for it. It is intended to be used as part of a larger system that takes queries the prediction service and then takes some action based on the result. The result has been formatted for human view; it could be changed to its unformatted version for machine use.
+Gunicorn will be serving the web service at port 9696, but there is no UI for it. It is accessed through API requests, querying the prediction service which returns a result indicating whether or not an action should be taken (due to probable machine failure). The returned JSON has been formatted for human view; it could eaily be changed to a more machine-readable format.
 
 1. With the containers running, open a new terminal and `cd` into the `predict_machine_failure` project folder.
 1. `pipenv install` to install requirements.
@@ -109,16 +109,32 @@ Gunicorn will be serving the web service at port 9696, but there is no UI for it
 <details>
 <summary><b><i>Run integration tests</i></b></summary>
 
-This test will start docker-compose if it is not already running.
+The docker containers must be up and running prior to running the test script.
 
-When the tests are done, all containers will be stopped and removed.
+When the tests are done, you may execute docker-compose down if you are finished with the services.
 
-The tests use localstack to create an s3 bucket and upload the model pickle file to it. It prints a list of buckets on localstack:s3, and lists the files in the bucket just created.
+The tests do the following:
+
+- use localstack to create an s3 bucket and upload the model pickle file to it. 
+- print a list of buckets created on localstack:s3, and list the files in the bucket that were just created.
+- runs tests on the prediction-webservice
+- print test result
+
 
 ```
-cd predict_machine_failure/tests/integration_tests/
+# Begin at the project root directory
+cd predict_machine_failure
 
+# Start docker containers
+docker-compose build --no-cache
+docker-compose up --remove-orphans
+
+# Run integration tests
+cd tests/integration_tests/
 sh ./run.sh
+
+# Optional: stop docker containers
+docker-compose down
 ```
 <br><br>
 </details>

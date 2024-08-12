@@ -1,8 +1,8 @@
-boto3
-pandas
-numpy
-flask
+boto3==1.34.131
+pandas==2.2.2
+numpy==1.26.4
+Flask==3.0.3
 scikit-learn===1.5.0
-localstack
-gunicorn
-requests
+localstack==3.6.0
+gunicorn==21.2.0
+requests==2.32.3

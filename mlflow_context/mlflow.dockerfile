@@ -1,10 +1,10 @@
 FROM python:3.10-slim
 
-RUN pip install --upgrade pip && pip install mlflow==2.12.1
+RUN pip install --upgrade pip && pip install mlflow==2.12.1 
 
 EXPOSE 5000
-
-CMD [\
+    
+CMD [ \
     "mlflow", "server", \
     "--backend-store-uri", "sqlite:///home/mlflow_data/mlflow.db", \
     "--default-artifact-root", "/home/mlflow_data/mlartifacts", \
