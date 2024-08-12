@@ -35,7 +35,8 @@ def export_data(data: Tuple[DictVectorizer, LinearRegression]) -> None:
     """
 
     EXPERIMENT_NAME = "train_model_thru_mage"
-    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000")
+    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI",
+                                    "http://mlflow:5000")
 
     # register model in mlflow
     client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)

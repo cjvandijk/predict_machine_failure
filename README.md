@@ -61,6 +61,8 @@ Training and deployment code is Dockerized. Docker Compose uses three separate d
 
 This dockerized project can be run on your host machine or the steps for running it (below) can be done on cloud, e.g. AWS EC2.
 
+All code has been linted with black, flake8, and isort.
+
 The hourly trigger for the Mage re-training pipeline only executes if data changes. Since the data from Kaggle datasets is not changing, this process has been mocked using the pull request count of an active github repository. It tracks the repo's previous pull request count and if the current count has increased, it triggers a re-training. Since the training data has not actually changed, the resulting model will be the same as the previous one. But since the pull requests are frequent in this repo, it will trigger re-training so that the process can be witnessed.
 <br><br>
 </details>

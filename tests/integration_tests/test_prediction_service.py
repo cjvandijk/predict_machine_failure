@@ -42,26 +42,25 @@ machine_readings = {
         "footfall": 3000000,
         "temp": -19,
         "aqi": 3,
-    }
+    },
 }
 
 for k in machine_readings:
     response = requests.post(url, json=machine_readings[k])
     resp = response.json()
 
-    assert 'error_message' in resp
-    assert 'failure_likelihood' in resp
+    assert "error_message" in resp
+    assert "failure_likelihood" in resp
 
     if k == "should_predict_failure":
-        assert int(resp['failure_likelihood'][:-2]) <= 50
+        assert int(resp["failure_likelihood"][:-2]) <= 50
 
     if k == "should_not_predict_failure":
-        assert int(resp['failure_likelihood'][:-2]) > 50
-
+        assert int(resp["failure_likelihood"][:-2]) > 50
 
     if k == "should_send_error_msg":
-        assert resp['error_message'] is not None
+        assert resp["error_message"] is not None
     else:
-        assert resp['error_message'] is None
+        assert resp["error_message"] is None
 
     print("*** All tests for the prediction web service have passed ***")

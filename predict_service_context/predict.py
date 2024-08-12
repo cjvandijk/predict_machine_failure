@@ -16,6 +16,7 @@ If MODELS_LOC is not in the environemnt, or if the model cannot be
 loaded from its filename, an error will be returned by the service.
 """
 
+
 def load_model():
     """
     Locates model with MODELS_LOC environment variable, returns either
@@ -51,6 +52,7 @@ def predict(features: Dict[str, int], model, dv) -> float:
 
 app = Flask("predict-machine-failure")
 
+
 @app.route("/predict", methods=["POST"])
 def predict_endpoint() -> Dict[str, str | int]:
     """
@@ -60,20 +62,27 @@ def predict_endpoint() -> Dict[str, str | int]:
 
     machine_readings = request.get_json()
 
-    result = {
-        "error_message": None,
-        "failure_likelihood": None
-    }
+    result = {"error_message": None, "failure_likelihood": None}
 
-    required_keys = ["footfall", "temp_mode", "air_quality", "proximity_sensor",
-                     "current_usage", "voc_level", "revolutions_per_minute",
-                     "input_pressure", "temperature"]
+    required_keys = [
+        "footfall",
+        "temp_mode",
+        "air_quality",
+        "proximity_sensor",
+        "current_usage",
+        "voc_level",
+        "revolutions_per_minute",
+        "input_pressure",
+        "temperature",
+    ]
 
     for k in required_keys:
         if k not in machine_readings:
-            result["error_message"] = f"Incorrect data sent to predict service. Expecting {k}."
+            result["error_message"] = (
+                f"Incorrect data sent to predict service. Expecting {k}."
+            )
             return jsonify(result)
-        
+
     model_load_msg, dv, model = load_model()
 
     if model_load_msg:  # a message means the model failed to load

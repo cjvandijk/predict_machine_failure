@@ -12,7 +12,9 @@ if __name__ == "__main__":
     except Exception as e:
         print(e)
     predictions_path = "~/Documents/Projects/zoomcamp-homework/mlops/best_practices_hw_6/homework/output/yellow_tripdata_2023-03.parquet"
-    s3.upload_to_aws(models_pkl_path, bucket_name, 'model/model.pkl')
-    
-    print("~~~~~~ BUCKETS CREATED IN THIS TEST:",s3.list_buckets())
-    print(f"~~~~~~ DATA THAT WAS LOADED INTO LOCALSTACK {bucket_name}: {s3.list_data_in_bucket(bucket_name)}")
+    s3.upload_to_aws(models_pkl_path, bucket_name, "model/model.pkl")
+
+    print("~~~~ BUCKETS CREATED IN THIS TEST:", s3.list_buckets())
+    print(
+        f"~~~~ DATA THAT WAS LOADED INTO LOCALSTACK {bucket_name}: {s3.list_data_in_bucket(bucket_name)}"
+    )

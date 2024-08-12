@@ -4,10 +4,9 @@ from pathlib import Path
 
 import mlflow
 from pandas import DataFrame
+from predict_machine_failure.utils import encode, split_dataset
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
-
-from predict_machine_failure.utils import encode, split_dataset
 
 """
 This is a Mage block, which runs in the pipeline to

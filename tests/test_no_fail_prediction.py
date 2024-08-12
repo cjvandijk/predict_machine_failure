@@ -30,6 +30,6 @@ url = "http://localhost:9696/predict"
 response = requests.post(url, json=machine_readings)
 resp = response.json()
 print(resp)
-assert 'error_message' in resp
-assert resp['error_message'] is None
-assert 'failure_likelihood' in resp
+assert "error_message" in resp
+assert resp["error_message"] is None
+assert "failure_likelihood" in resp
