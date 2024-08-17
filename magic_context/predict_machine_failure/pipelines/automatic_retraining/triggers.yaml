@@ -2,16 +2,16 @@ triggers:
 - description: null
   envs: []
   last_enabled_at: 2024-08-09 00:33:11.336247+00:00
-  name: Retrain models hourly
+  name: Retrain models daily
   pipeline_uuid: automatic_retraining
-  schedule_interval: '@hourly'
+  schedule_interval: '@daily'
   schedule_type: time
   settings:
     allow_blocks_to_fail: true
     create_initial_pipeline_run: true
     skip_if_previous_running: true
   sla: null
-  start_time: 2024-08-08 00:00:00+00:00
+  start_time: 2024-08-07 00:00:00+00:00
   status: active
   token: 52ff456fd45447e6805f549c89d04bf0
   variables: {}
