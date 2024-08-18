@@ -1,9 +1,9 @@
-from pandas import DataFrame
-from sklearn.feature_extraction import DictVectorizer
-
 """
 Function for vectorizing features used in training a Linear Regression model.
 """
+
+from pandas import DataFrame
+from sklearn.feature_extraction import DictVectorizer
 
 
 def vectorize_features(training_set: DataFrame, validation_set: DataFrame):

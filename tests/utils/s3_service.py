@@ -1,8 +1,12 @@
+"""
+S3 storage API Implementations
+"""
+
 import boto3
 
 
 class S3Storage:
-    """S3 storage API Implementations"""
+    """S3 storage API class"""
 
     def __init__(self) -> None:
         # super().__init__()

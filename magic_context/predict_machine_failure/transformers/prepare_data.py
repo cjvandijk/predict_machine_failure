@@ -1,7 +1,3 @@
-import numpy as np
-from pandas import DataFrame
-from scipy import stats
-
 """
 This is a Mage block, which runs in the pipeline to
 prepare data from the previous block for training a
@@ -9,6 +5,10 @@ Linear Regression model. It accepts a DataFrame,
 renames columns and removes outliers, and returns
 the prepared DataFrame.
 """
+
+import numpy as np
+from pandas import DataFrame
+from scipy import stats
 
 
 if "transformer" not in globals():

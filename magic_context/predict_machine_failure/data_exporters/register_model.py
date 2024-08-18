@@ -1,3 +1,9 @@
+"""
+This is a Mage block, which runs in the pipeline to
+register the model that was trained in the block preceeding
+this one.
+"""
+
 import os
 from typing import Tuple
 
@@ -6,12 +12,6 @@ from mlflow.entities import ViewType
 from mlflow.tracking import MlflowClient
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
-
-"""
-This is a Mage block, which runs in the pipeline to
-register the model that was trained in the block preceeding
-this one.
-"""
 
 
 if "data_exporter" not in globals():

@@ -1,3 +1,7 @@
+"""
+Trigger the training pipeline
+"""
+
 from mage_ai.orchestration.triggers.api import trigger_pipeline
 
 if "custom" not in globals():
@@ -7,8 +11,7 @@ if "custom" not in globals():
 @custom
 def retrain(*args, **kwargs):
     """
-    Note: code used was shared by Mage AI in their mlops zoomcamp repo.
-    Changed the name of the pipeline to trigger.
+    Retrains the model, triggering the training pipeline
     """
 
     models = [

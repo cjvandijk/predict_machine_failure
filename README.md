@@ -3,13 +3,17 @@
 ## Problem Description
 This project is designed to predict ahead of time whether a machine will fail based on its sensor data. By sending the machine's sensor data to a prediction webservice, we can prevent machine failure, or prepare for machine failure ahead of the actual failure.
 
+<i>(click any subheading below to expand the text)</i>
+
+
 ## Dataset Overview
 
 <details>
-<summary><i><b>High Level Data Overview</b> (click to expand)</i></summary>
+<summary><i><b>High Level Data Overview</b></i></summary>
 
 Kaggle contains a dataset for [Machine Failure Prediction Using Sensor Data](https://www.kaggle.com/datasets/umerrtx/machine-failure-prediction-using-sensor-data?resource=download). The data in that dataset was collected from the sensors on various machines. Each observation contains the data in Columns Description (below), along with whether there was an associated machine failure. The aim of this project is to produce and deploy a Linear Regression model with this data, which can then be used to predict machine failure in advance.<br><br>
 </details>
+
 
 <details>
 <summary><i><b>Column Descriptions</b></i></summary>
@@ -26,46 +30,62 @@ Kaggle contains a dataset for [Machine Failure Prediction Using Sensor Data](htt
 - fail: Binary indicator of machine failure (1 for failure, 0 for no failure).
 </details>
 
+
 ## Project Details
 
 <details>
 <summary><b><i>Project Components</i></b></summary>
 
-The emphasis on this project is not on producing the best model possible. It focuses instead on implementing the MLOps steps required to:
+The emphasis on this project is not on producing the best model possible. 
+It focuses instead on implementing the MLOps steps required to:
 - ingest and transform data with Mage AI
 - split and encode the dataset in Mage
 - train a model in Mage AI, while
-    - tracking model training experiments in Mage/MLFlow
-    - registering the model in Mage/MLFlow
-- run hourly trigger in Mage to automatically re-train the model when data changes
+    - track model training experiments in MLFlow
+    - register the model in MLFlow
+- run daily trigger in Mage to automatically re-train the model when data changes
 - save the model as a pickle binary
 - deploy the model as a web service using Flask/gunicorn
 - monitor the pipeline through Mage
-- integration testing
-    - s3 upload using localstack
+- unit and integration testing
+    - s3 model upload using localstack
     - the prediction webservice using Python's requests module
 
-<br><br>
+<br>
 </details>
+
 
 <details>
 <summary><b><i>Initial exploratory data analysis</i></b></summary>
 
-See `notebooks/1.0-cvd-machine-failure-eda.ipynb`<br><br>
+See [`notebooks/1.0-cvd-machine-failure-eda.ipynb`](https://github.com/cjvandijk/predict_machine_failure/blob/main/notebooks/1.0-cvd-machine-failure-eda.ipynb)<br><br>
 </details>
+
 
 <details>
 <summary><b><i>Additional Technical Overview</i></b></summary>
 
-Training and deployment code is Dockerized. Docker Compose uses three separate docker images to spin up separate containers for Mage, MLFlow, and the Web Service, exposing all ports on host machine.
+### Docker
 
-This dockerized project can be run on your host machine or the steps for running it (below) can be done on cloud, e.g. AWS EC2.
+Training and deployment code is Dockerized. Docker Compose spins up five separate containers, exposing all ports on the host machine: 
+
+- Mage
+- Mage's database
+- MLFlow
+- Localstack
+- the Web Service
+
+This dockerized project can be run on your host machine or the steps for running it (below) can be done on cloud, e.g. AWS EC2 or Github Codespaces.
+
+### Linting
 
 All code has been linted with black, flake8, and isort.
 
-The hourly trigger for the Mage re-training pipeline only executes if data changes. Since the data from Kaggle datasets is not changing, this process has been mocked using the pull request count of an active github repository. It tracks the repo's previous pull request count and if the current count has increased, it triggers a re-training. Since the training data has not actually changed, the resulting model will be the same as the previous one. But since the pull requests are frequent in this repo, it will trigger re-training so that the process can be witnessed.
+### Automatic model re-training sensor
+The daily trigger for the Mage re-training pipeline only executes if data changes. If you wish to see the trigger sensor in action, change the trigger frequency from the `automatic_retraining` pipeline. Since the data from Kaggle datasets is not changing, this process has been mocked using the pull request count of an active github repository. It tracks the repo's previous pull request count and if the current count has increased, it triggers a re-training. Since the training data has not actually changed, the resulting model will be the same as the previous one. But since the pull requests are frequent in this repo, it will trigger re-training so that the process can be witnessed.
 <br><br>
 </details>
+
 
 ## Running the Project
 
@@ -79,6 +99,7 @@ The hourly trigger for the Mage re-training pipeline only executes if data chang
 1. If you are running this on the cloud, you will need to establish ssh connection your local machine and forward port 9696 to use the web service, and if you want to view the Mage and MLFlow UI, also forward ports 6789 and 5000. (this can be done via [Visual Studio Code](https://code.visualstudio.com/docs/remote/ssh))
 <br><br>
 </details>
+
 
 <details>
 <summary><b><i>View the Mage and MLFlow UI</i></b></summary>
@@ -96,22 +117,11 @@ The hourly trigger for the Mage re-training pipeline only executes if data chang
 <br><br>
 </details>
 
-<details>
-<summary><b><i>Test the webservice</i></b></summary>
-
-Gunicorn will be serving the web service at port 9696, but there is no UI for it. It is accessed through API requests, querying the prediction service which returns a result indicating whether or not an action should be taken (due to probable machine failure). The returned JSON has been formatted for human view; it could eaily be changed to a more machine-readable format.
-
-1. With the containers running, open a new terminal and `cd` into the `predict_machine_failure` project folder.
-1. `pipenv install` to install requirements.
-1. `pipenv run python tests/test_fail.py` to use an observation that will predict machine failure.
-1. `pipenv run python tests/test_no_fail.py` to use an observation that will predict machine non-failure.
-<br><br>
-</details>
 
 <details>
 <summary><b><i>Run unit and integration tests</i></b></summary>
 <br>
-The docker containers must be up and running prior to running the test scripts.
+The docker containers must be up and running prior to running the test scripts. Gunicorn will be serving the web service at port 9696, but there is no UI for it. It is accessed through API requests, querying the prediction service which returns a result indicating whether or not an action should be taken (due to probable machine failure). The returned JSON has been formatted for human view; it could eaily be changed to a more machine-readable format.
 
 When the tests are done, you may execute docker-compose down if you are finished with the services.
 

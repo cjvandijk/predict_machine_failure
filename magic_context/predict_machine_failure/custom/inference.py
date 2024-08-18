@@ -1,3 +1,7 @@
+"""
+Run prediction for given input
+"""
+
 import sys
 import os
 project_root = os.getenv("USER_CODE_PATH", "/home/src/predict_machine_failure")
@@ -33,4 +37,4 @@ def mage_predict(**kwargs) -> Dict[str, float]:
 
     predictions = predict(inputs, model, vectorizer)
 
-    return predictions
+    return model_load_msg, predictions

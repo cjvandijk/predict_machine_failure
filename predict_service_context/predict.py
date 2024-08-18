@@ -1,9 +1,3 @@
-import os
-import pickle
-from typing import Dict
-
-from flask import Flask, jsonify, request
-
 """
 Flask application for predicting machine failure based on
 readings submitted from machine. README.md contains descriptions
@@ -15,6 +9,12 @@ available, the filename to appear as environment variable MODELS_LOC.
 If MODELS_LOC is not in the environemnt, or if the model cannot be
 loaded from its filename, an error will be returned by the service.
 """
+
+import os
+import pickle
+from typing import Dict
+
+from flask import Flask, jsonify, request
 
 
 def load_model():

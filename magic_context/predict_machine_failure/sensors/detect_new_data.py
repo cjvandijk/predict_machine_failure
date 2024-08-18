@@ -1,3 +1,8 @@
+"""
+Emulates checking for new data which would necessitate model
+re-training.
+"""
+
 import json
 import os
 

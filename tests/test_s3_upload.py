@@ -1,3 +1,7 @@
+"""
+Test upload of model file to s3 using localstack
+"""
+
 import sys
 import os
 project_root = os.getenv("USER_CODE_PATH", "/home/src/predict_machine_failure")

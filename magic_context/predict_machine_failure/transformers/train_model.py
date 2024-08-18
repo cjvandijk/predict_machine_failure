@@ -1,3 +1,9 @@
+"""
+This is a Mage block, which runs in the pipeline to
+train the model after data was prepared in the block preceeding
+this one. It also tracks the training experiment with MLFlow.
+"""
+
 import os
 import pickle
 from pathlib import Path
@@ -7,12 +13,6 @@ from pandas import DataFrame
 from predict_machine_failure.utils import encode, split_dataset
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
-
-"""
-This is a Mage block, which runs in the pipeline to
-train the model after data was prepared in the block preceeding
-this one. It also tracks the training experiment with MLFlow.
-"""
 
 
 if "transformer" not in globals():

@@ -1,12 +1,12 @@
-import os
-
-import pandas as pd
-
 """
 This is a Mage block, which runs in the pipeline as the first
 block. It loads the dataset specified in INPUT_DATA_FILE env
 variable and returns it as a pandas DataFrame.
 """
+
+import os
+
+import pandas as pd
 
 
 if "data_loader" not in globals():

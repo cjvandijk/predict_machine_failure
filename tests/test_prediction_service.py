@@ -1,5 +1,3 @@
-import requests
-
 """
 Tests the machine failure prediction service by sending it a list of machine
 readings to get a response with likelihood of machine failure.
@@ -13,6 +11,9 @@ These tests can be executed with pytest from the root directory, e.g.,
 or to run all tests in the tests directory:
 `pipenv run pytest tests/`
 """
+
+import requests
+
 
 url = "http://localhost:9696/predict"
 

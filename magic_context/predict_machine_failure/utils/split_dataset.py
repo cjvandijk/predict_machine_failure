@@ -1,9 +1,9 @@
-import pandas as pd
-from sklearn.model_selection import train_test_split
-
 """
 Function for splitting dataset into test and train sets
 """
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
 
 
 def split_df(df: pd.DataFrame):
