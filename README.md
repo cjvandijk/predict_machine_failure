@@ -109,9 +109,9 @@ Gunicorn will be serving the web service at port 9696, but there is no UI for it
 </details>
 
 <details>
-<summary><b><i>Run integration tests</i></b></summary>
-
-The docker containers must be up and running prior to running the test script.
+<summary><b><i>Run unit and integration tests</i></b></summary>
+<br>
+The docker containers must be up and running prior to running the test scripts.
 
 When the tests are done, you may execute docker-compose down if you are finished with the services.
 
@@ -119,24 +119,30 @@ The tests do the following:
 
 - use localstack to create an s3 bucket and upload the model pickle file to it. 
 - print a list of buckets created on localstack:s3, and list the files in the bucket that were just created.
-- runs tests on the prediction-webservice
-- print test result
+- runs several unit tests on the prediction-webservice predict function
 
+<br>
+Begin at the project root directory (predict_machine_failure)
 
 ```
-# Begin at the project root directory
 cd predict_machine_failure
+```
 
-# Start docker containers
+Build and start docker containers
+```
 docker-compose build --no-cache
 docker-compose up --remove-orphans
+```
 
-# Run integration tests
-cd tests/integration_tests/
-sh ./run.sh
+Run unit and integration tests
+```
+pipenv run pytest tests/
+```
 
-# Optional: stop docker containers
+Stop docker containers
+```
 docker-compose down
 ```
+
 <br><br>
 </details>
