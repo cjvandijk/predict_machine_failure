@@ -4,9 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-black = "*"
-flake8 = "*"
-isort = "*"
 typer = "*"
 ipython = "*"
 jupyter = "*"
@@ -34,6 +31,9 @@ localstack = "*"
 [dev-packages]
 pytest = "*"
 pylint = "*"
+black = "*"
+flake8 = "*"
+isort = "*"
 
 [requires]
 python_version = "3.10"
