@@ -1,3 +1,5 @@
+# pylint disable=import-error
+
 """
 Trigger the training pipeline
 """
@@ -9,19 +11,19 @@ if "custom" not in globals():
 
 
 @custom
-def retrain(*args, **kwargs):
+def retrain():
     """
     Retrains the model, triggering the training pipeline
     """
 
-    models = [
-        "linear_model.Lasso",
-        "linear_model.LinearRegression",
-        "svm.LinearSVR",
-        "ensemble.ExtraTreesRegressor",
-        "ensemble.GradientBoostingRegressor",
-        "ensemble.RandomForestRegressor",
-    ]
+    # models = [
+    #     "linear_model.Lasso",
+    #     "linear_model.LinearRegression",
+    #     "svm.LinearSVR",
+    #     "ensemble.ExtraTreesRegressor",
+    #     "ensemble.GradientBoostingRegressor",
+    #     "ensemble.RandomForestRegressor",
+    # ]
 
     trigger_pipeline(
         "predict_machine_failure",

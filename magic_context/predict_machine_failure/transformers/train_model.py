@@ -1,3 +1,5 @@
+# pylint disable=import-error, no-name-in-module
+
 """
 This is a Mage block, which runs in the pipeline to
 train the model after data was prepared in the block preceeding
@@ -10,10 +12,10 @@ from pathlib import Path
 
 import mlflow
 from pandas import DataFrame
-from predict_machine_failure.utils import encode, split_dataset
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
 
+from predict_machine_failure.utils import encode, split_dataset
 
 if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
@@ -23,6 +25,7 @@ if "test" not in globals():
 
 @transformer
 def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
+    # pytest disable=invalid-name, broad-exception-caught
     """
     Trains a linear regression model. Prints the intercept for homework answer.
 
@@ -59,7 +62,7 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
 
 
 @test
-def test_output(output, *args) -> None:
+def test_output(output) -> None:
     """
     Template code for testing the output of the block.
     """

@@ -1,3 +1,5 @@
+# pylint disable=invalid-name
+
 """
 Flask application for predicting machine failure based on
 readings submitted from machine. README.md contains descriptions
@@ -18,6 +20,8 @@ from flask import Flask, jsonify, request
 
 
 def load_model():
+    # pylint disable=broad-exception-caught
+
     """
     Locates model with MODELS_LOC environment variable, returns either
     the loaded model and dictvectorizer, or an error message indicating
@@ -78,9 +82,9 @@ def predict_endpoint() -> Dict[str, str | int]:
 
     for k in required_keys:
         if k not in machine_readings:
-            result["error_message"] = (
-                f"Incorrect data sent to predict service. Expecting {k}."
-            )
+            result[
+                "error_message"
+            ] = f"Incorrect data sent to predict service. Expecting {k}."
             return jsonify(result)
 
     model_load_msg, dv, model = load_model()

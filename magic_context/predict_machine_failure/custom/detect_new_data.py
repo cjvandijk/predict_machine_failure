@@ -1,3 +1,9 @@
+# pylint disable=import-error, unused-argument, possibly-used-before-assignment
+
+"""
+Used by mage in sensor function
+"""
+
 if "custom" not in globals():
     from mage_ai.data_preparation.decorators import custom
 if "test" not in globals():

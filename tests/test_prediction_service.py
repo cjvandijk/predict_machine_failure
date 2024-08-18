@@ -1,3 +1,5 @@
+# pylint: disable=duplicate-code
+
 """
 Tests the machine failure prediction service by sending it a list of machine
 readings to get a response with likelihood of machine failure.
@@ -14,8 +16,7 @@ or to run all tests in the tests directory:
 
 import requests
 
-
-url = "http://localhost:9696/predict"
+URL = "http://localhost:9696/predict"
 
 
 def test_response_should_predict_unlikely_failure():
@@ -36,10 +37,10 @@ def test_response_should_predict_unlikely_failure():
         "input_pressure": 6,
         "temperature": 8,
     }
-    
-    response = requests.post(url, json=machine_reading)
+
+    response = requests.post(URL, json=machine_reading, timeout=10)
     resp = response.json()
-    
+
     assert "error_message" in resp
     assert resp["error_message"] is None
     assert "failure_likelihood" in resp
@@ -49,7 +50,7 @@ def test_response_should_predict_unlikely_failure():
 def test_response_should_predict_likely_failure():
     """
     Tests the machine failure prediction service by sending it a list of machine
-    readings to get a response with likelihood of machine failure. 
+    readings to get a response with likelihood of machine failure.
     """
 
     machine_reading = {
@@ -63,10 +64,10 @@ def test_response_should_predict_likely_failure():
         "input_pressure": 6,
         "temperature": 22,
     }
-    
-    response = requests.post(url, json=machine_reading)
+
+    response = requests.post(URL, json=machine_reading, timeout=10)
     resp = response.json()
-    
+
     assert "error_message" in resp
     assert resp["error_message"] is None
     assert "failure_likelihood" in resp
@@ -79,8 +80,8 @@ def test_missing_fields_error():
         "temp": -19,
         "aqi": 3,
     }
-    
-    response = requests.post(url, json=machine_reading)
+
+    response = requests.post(URL, json=machine_reading, timeout=10)
     resp = response.json()
 
     assert "error_message" in resp

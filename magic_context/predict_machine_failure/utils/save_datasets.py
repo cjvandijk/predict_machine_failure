@@ -1,4 +1,3 @@
-
 """
 Save parquet files to localhost
 """
@@ -8,9 +7,7 @@ from datetime import datetime
 
 from pandas import DataFrame
 
-
-S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL",
-                            "http://localhost:4566")
+S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", "http://localhost:4566")
 BUCKET = os.getenv("BUCKET", "training-datasets-claudia")
 current_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 print("ENDPOINT", S3_ENDPOINT_URL)

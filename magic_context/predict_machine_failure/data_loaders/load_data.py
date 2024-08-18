@@ -1,3 +1,5 @@
+# pylint disable=import-error, possibly-used-before-assignment
+
 """
 This is a Mage block, which runs in the pipeline as the first
 block. It loads the dataset specified in INPUT_DATA_FILE env
@@ -7,7 +9,6 @@ variable and returns it as a pandas DataFrame.
 import os
 
 import pandas as pd
-
 
 if "data_loader" not in globals():
     from mage_ai.data_preparation.decorators import data_loader
@@ -31,7 +32,7 @@ def load_data_from_file() -> pd.DataFrame:
 
 
 @test
-def test_output(output, *args) -> None:
+def test_output(output) -> None:
     """
     Template code for testing the output of the block.
     """

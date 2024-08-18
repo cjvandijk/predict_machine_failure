@@ -7,6 +7,7 @@ from sklearn.feature_extraction import DictVectorizer
 
 
 def vectorize_features(training_set: DataFrame, validation_set: DataFrame):
+    # pylint disable=invalid-name
     """
     Accepts training and validation DataFrames, uses DictVectorizer to
     vectorize them for training, returning the X_train sparse matrix, X_val

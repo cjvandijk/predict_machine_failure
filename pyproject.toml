@@ -6,7 +6,7 @@ disable = [
 
 [tool.black]
 line-length=80
-target-version = ['py312']
+target-version = ['py311']
 
 [tool.isort]
 profile = "black"
@@ -19,3 +19,18 @@ filterwarnings = [
     "ignore::UserWarning",
     "ignore::DeprecationWarning"
 ]
+
+[tool.pylint.'MESSAGES CONTROL']
+max-line-length = 120
+disable = """
+    possibly-used-before-assignment,
+    import-error,
+    wrong-import-position,
+    unused-argument,
+    no-name-in-module,
+    invalid-name,
+    undefined-variable,
+    unspecified-encoding,
+    broad-exception-caught,
+    unused-variable
+"""

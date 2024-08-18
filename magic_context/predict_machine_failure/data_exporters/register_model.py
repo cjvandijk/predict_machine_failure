@@ -1,3 +1,5 @@
+# pylint disable=import-error, possibly-used-before-assignment
+
 """
 This is a Mage block, which runs in the pipeline to
 register the model that was trained in the block preceeding
@@ -13,13 +15,13 @@ from mlflow.tracking import MlflowClient
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
 
-
 if "data_exporter" not in globals():
     from mage_ai.data_preparation.decorators import data_exporter
 
 
 @data_exporter
 def export_data(data: Tuple[DictVectorizer, LinearRegression]) -> None:
+    # pytest disable=invalid-name
     """
     Logs the dictvectorizer to mlflow artifacts and the linear
     regression model to mlflow models. Registers the logged model
@@ -35,8 +37,7 @@ def export_data(data: Tuple[DictVectorizer, LinearRegression]) -> None:
     """
 
     EXPERIMENT_NAME = "train_model_thru_mage"
-    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI",
-                                    "http://mlflow:5000")
+    MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://mlflow:5000")
 
     # register model in mlflow
     client = MlflowClient(tracking_uri=MLFLOW_TRACKING_URI)

@@ -1,3 +1,5 @@
+# pylint disable=import-error, unspecified-encoding
+
 """
 Emulates checking for new data which would necessitate model
 re-training.
@@ -14,7 +16,7 @@ if "sensor" not in globals():
 
 
 @sensor
-def check_for_new_data(*args, **kwargs) -> bool:
+def check_for_new_data() -> bool:
     """
     Note that the data selected for this project is static and does not change.
     To emulate changing data, a call is made to an endpoint that returns a
@@ -35,7 +37,7 @@ def check_for_new_data(*args, **kwargs) -> bool:
             data_tracker_prev = json.load(f)
 
     data_tracker = requests.get(
-        "https://hub.docker.com/v2/repositories/mageai/mageai"
+        "https://hub.docker.com/v2/repositories/mageai/mageai", timeout=10
     ).json()
     with open(path, "w") as f:
         f.write(json.dumps(data_tracker))

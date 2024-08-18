@@ -1,3 +1,5 @@
+# pylint disable=import-error, possibly-used-before-assignment
+
 """
 This is a Mage block, which runs in the pipeline to
 prepare data from the previous block for training a
@@ -9,7 +11,6 @@ the prepared DataFrame.
 import numpy as np
 from pandas import DataFrame
 from scipy import stats
-
 
 if "transformer" not in globals():
     from mage_ai.data_preparation.decorators import transformer
@@ -53,7 +54,7 @@ def execute_transformer_action(df_raw: DataFrame) -> DataFrame:
 
 
 @test
-def test_output(output, *args) -> None:
+def test_output(output) -> None:
     """
     Template code for testing the output of the block.
     """
