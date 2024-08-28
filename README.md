@@ -36,7 +36,7 @@ Kaggle contains a dataset for [Machine Failure Prediction Using Sensor Data](htt
 <details>
 <summary><b><i>Project Components</i></b></summary>
 
-The emphasis on this project is not on producing the best model possible. 
+The emphasis on this project is not on producing the best model possible.
 It focuses instead on implementing the MLOps steps required to:
 - ingest and transform data with Mage AI
 - split and encode the dataset in Mage
@@ -67,7 +67,7 @@ See [`notebooks/1.0-cvd-machine-failure-eda.ipynb`](https://github.com/cjvandijk
 
 ### Docker
 
-Training and deployment code is Dockerized. Docker Compose spins up five separate containers, exposing all ports on the host machine: 
+Training and deployment code is Dockerized. Docker Compose spins up five separate containers, exposing all ports on the host machine:
 
 - Mage
 - Mage's database
@@ -104,7 +104,7 @@ The daily trigger for the Mage re-training pipeline only executes if data change
 <details>
 <summary><b><i>View the Mage and MLFlow UI</i></b></summary>
 
-- The Mage UI will be available from your browser at http://localhost:6789. 
+- The Mage UI will be available from your browser at http://localhost:6789.
     - Navigate to that address.
     - Select the pipelines button at the left.
     - Select the predict_machine_failure pipeline.
@@ -127,7 +127,7 @@ When the tests are done, you may execute docker-compose down if you are finished
 
 The tests do the following:
 
-- use localstack to create an s3 bucket and upload the model pickle file to it. 
+- use localstack to create an s3 bucket and upload the model pickle file to it.
 - print a list of buckets created on localstack:s3, and list the files in the bucket that were just created.
 - runs several unit tests on the prediction-webservice predict function
 
@@ -144,9 +144,10 @@ docker-compose build --no-cache
 docker-compose up --remove-orphans
 ```
 
-Run unit and integration tests
+Run unit and integration tests from root directory
 ```
-pipenv run pytest tests/
+pip install -r tests/requirements.txt
+pytest tests/
 ```
 
 Stop docker containers
