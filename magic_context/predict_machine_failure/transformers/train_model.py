@@ -43,10 +43,10 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
 
     with mlflow.start_run():
         df_train, df_val, y_train, y_val = split_dataset.split_df(df)
+
         X_train, X_val, dv = encode.vectorize_features(df_train, df_val)
 
         lr = LinearRegression()
-
         lr.fit(X_train, y_train)
 
         model_path = Path(os.getenv("MODELS_LOC", "../models.lin_reg.bin"))
@@ -58,11 +58,19 @@ def start_train(df: DataFrame) -> tuple[DictVectorizer, LinearRegression]:
         except Exception as e:
             print(f"Failed to write binary file: {e}")
 
+        ref_data_file = Path(
+            os.getenv(
+                "REF_DATA_FILE",
+                "../../../data/processed/reference_data.parquet",
+            )
+        )
+        df_val.to_parquet(ref_data_file)
+
     return dv, lr
 
 
 @test
-def test_output(output) -> None:
+def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """

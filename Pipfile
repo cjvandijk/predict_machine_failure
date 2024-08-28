@@ -27,7 +27,11 @@ mkdocs = "*"
 gunicorn = "*"
 requests = "*"
 localstack = "*"
-black = "*"
+tqdm = "*"
+joblib = "*"
+psycopg = "*"
+psycopg-binary = "*"
+evidently = "*"
 
 [dev-packages]
 pytest = "*"

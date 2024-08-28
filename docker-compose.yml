@@ -1,8 +1,15 @@
+volumes:
+  grafana_data: {}
+networks:
+  front-tier:
+  back-tier:
+  app-network:
+    driver: bridge
 services:
   magic:
     image: mageai/mageai:latest
     working_dir: /home/src/magic_context
-    command: mage start --project-uuid 6164c8a97a5e48aea8c28ea5ef078b4a ${PROJECT_NAME} 
+    command: mage start --project-uuid 6164c8a97a5e48aea8c28ea5ef078b4a ${PROJECT_NAME}
     env_file:
       - .env
     build:
@@ -46,7 +53,7 @@ services:
     networks:
       - app-network
   mlflow:
-    build: 
+    build:
       context: ./mlflow_context
       dockerfile: mlflow.dockerfile
     ports:
@@ -76,6 +83,33 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
-networks:
-  app-network:
-    driver: bridge
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example   # environment variable
+    ports:
+      - "5433:5433"
+    networks:
+      - back-tier   # only operate here because we won't access from browser
+  # adminer:  # manages db content, works natively with postgres
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - back-tier
+  #     - front-tier
+  # grafana:
+  #   image: grafana/grafana
+  #   user: "472"
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:  # datasources.yaml shows where to access data source
+  #     - ./config/grafana_datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+  #     - ./config/grafana_dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+  #     - ./dashboards:/opt/grafana/dashboards
+  #   networks:
+  #     - back-tier    # to communicate with database
+  #     - front-tier   # to access dashboard from browser
+  #   restart: always

@@ -82,9 +82,9 @@ def predict_endpoint() -> Dict[str, str | int]:
 
     for k in required_keys:
         if k not in machine_readings:
-            result[
-                "error_message"
-            ] = f"Incorrect data sent to predict service. Expecting {k}."
+            result["error_message"] = (
+                f"Incorrect data sent to predict service. Expecting {k}."
+            )
             return jsonify(result)
 
     model_load_msg, dv, model = load_model()
