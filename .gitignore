@@ -19,6 +19,7 @@ secrets/
 *.pem*
 terraform.tfstate
 terraform.tfstate.backup
+volume/cache/
 
 # Jupyter Notebook
 .ipynb_checkpoints
